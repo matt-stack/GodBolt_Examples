@@ -1,0 +1,48 @@
+https://gcc.godbolt.org/z/nf9q5Ks1v
+
+
+// The entry point and target profile are needed to compile this example:
+// -T ps_6_6 -E PSMain
+cbuffer GlobalConstants : register(b1)
+{
+    float4x4 ViewProj;
+    float4x4 SunShadowMatrix;
+    float3 ViewerPos;
+    float3 SunDirection;
+    float3 SunIntensity;
+    float _pad;
+    float IBLRange;
+    float IBLBias;
+}
+struct PSInput
+{
+    float4 position : SV_Position;
+    float4 color    : COLOR0;
+};
+
+float4 PSMain(PSInput input) : SV_Target0
+{
+    return input.color * input.color * _pad;
+}
+
+
+; Buffer Definitions:
+;
+; cbuffer GlobalConstants
+; {
+;
+;   struct hostlayout.GlobalConstants
+;   {
+;
+;       column_major float4x4 ViewProj;               ; Offset:    0
+;       column_major float4x4 SunShadowMatrix;        ; Offset:   64
+;       float3 ViewerPos;                             ; Offset:  128
+;       float3 SunDirection;                          ; Offset:  144
+;       float3 SunIntensity;                          ; Offset:  160
+;       float _pad;                                   ; Offset:  172
+;       float IBLRange;                               ; Offset:  176
+;       float IBLBias;                                ; Offset:  180
+;   
+;   } GlobalConstants;                                ; Offset:    0 Size:   184
+;
+; }
