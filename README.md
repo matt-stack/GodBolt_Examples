@@ -1,6 +1,9 @@
 # GodBolt_Examples
 Learning examples in GodBolt
 
+# CBuffer Alignment
+In hlsl, cbuffers cannot cross the 16-byte boundary between members. If one member were to cross, it is simply moved to the next boundary. You need to make sure that your CPU side struct that you memcpy to the buffer follows this rule, the compiler wont do it for you!
+
 # Template specializations
 Find if a `type` exists in a param pack only using templates logic
 ```
